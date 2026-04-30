@@ -10,7 +10,7 @@ export const createStompClient = (
   onPresence
 ) => {
 const client = new Client({
-  brokerURL: `wss://xsocial-backend-euzx.onrender.com/ws`,
+  brokerURL: import.meta.env.VITE_WS_URL,
   connectHeaders: {
     Authorization: `Bearer ${token}`,
   },
