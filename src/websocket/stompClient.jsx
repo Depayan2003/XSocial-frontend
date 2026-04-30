@@ -1,63 +1,3 @@
-// import { Client } from "@stomp/stompjs";
-
-// export const createStompClient = (
-//   token,
-//   onMessage,
-//   onSeen,
-//   onConversationEvent,
-//   onMessageDeleted,
-//   onDelivered
-// ) => {
-//   const client = new Client({
-//     brokerURL: "ws://localhost:8080/ws",
-//     connectHeaders: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//     onConnect: () => {
-
-//       // 🔔 Incoming chat messages
-//       client.subscribe("/user/queue/messages", msg =>
-//         onMessage(JSON.parse(msg.body))
-//       );
-
-//       // 👁 Seen updates
-//       client.subscribe("/user/queue/seen", msg =>
-//         onSeen(JSON.parse(msg.body)), msg => {
-//           if (onSeen) {
-//             onSeen(JSON.parse(msg.body))
-//           }
-//         }
-//       );
-
-//       // 🆕 Conversation updates (group created / deleted / added)
-//       client.subscribe("/user/queue/conversations", msg => {
-//         if (onConversationEvent) {
-//           onConversationEvent(JSON.parse(msg.body));
-//         }
-//       });
-
-//       // 🗑 Message deleted (REAL-TIME)
-//       client.subscribe("/topic/messages/deleted", msg => {
-//         if (onMessageDeleted) {
-//           onMessageDeleted(JSON.parse(msg.body));
-//         }
-//       });
-
-//       // ✅ NEW: DELIVERED (REAL-TIME DOUBLE TICK)
-//       client.subscribe("/user/queue/delivered", msg => {
-//         if (onDelivered) {
-//           onDelivered(JSON.parse(msg.body));
-//         }
-//       });
-//     },
-//     debug: () => { }, // silence logs
-//   });
-
-//   client.activate();
-//   return client;
-// };
-
-
 import { Client } from "@stomp/stompjs";
 
 export const createStompClient = (
@@ -70,12 +10,12 @@ export const createStompClient = (
   onPresence
 ) => {
   const client = new Client({
-    brokerURL: "ws://localhost:8080/ws",
-    connectHeaders: {
-      Authorization: `Bearer ${token}`,
-    },
-    debug: () => {},
-  });
+  brokerURL: `ws://${window.location.host}/ws`,
+  connectHeaders: {
+    Authorization: `Bearer ${token}`,
+  },
+  debug: () => {},
+});
 
   client.onConnect = () => {
 
