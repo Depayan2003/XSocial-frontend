@@ -9,14 +9,14 @@ export const createStompClient = (
   onDelivered,
   onPresence
 ) => {
-  const client = new Client({
-  brokerURL: `ws://${window.location.host}/ws`,
+const client = new Client({
+  brokerURL: `wss://xsocial-backend-euzx.onrender.com/ws`,
   connectHeaders: {
     Authorization: `Bearer ${token}`,
   },
   debug: () => {},
 });
-
+  
   client.onConnect = () => {
 
     /* ================= INCOMING MESSAGES ================= */
