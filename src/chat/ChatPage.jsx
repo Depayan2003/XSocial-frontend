@@ -585,14 +585,14 @@ return (
     <div className="h-screen w-full flex bg-black overflow-hidden">
 
       {/* ================= LEFT SIDEBAR ================= */}
-      <div
-        className={`
-          w-full sm:w-80 md:w-1/3 lg:w-1/4
-          bg-gray-900 border-r border-gray-800
-          flex flex-col
-          ${conversationId ? "hidden md:flex" : "flex"}
-        `}
-      >
+<div
+  className={`
+    w-full md:w-1/3 lg:w-1/4
+    bg-gray-900 border-r border-gray-800
+    flex flex-col
+    ${conversationId ? "hidden md:flex" : "flex"}
+  `}
+>
 
         {/* Sidebar Header */}
         <div className="px-3 sm:px-4 py-3 border-b border-gray-800
@@ -752,12 +752,14 @@ return (
 
 
       {/* ================= RIGHT CHAT AREA ================= */}
-      <div
-        className={`
-          flex-1 min-w-0 flex flex-col bg-black
-          ${conversationId ? "flex" : "hidden md:flex"}
-        `}
-      >
+<div
+  className={`
+    flex-1 min-w-0
+    flex flex-col
+    bg-black
+    ${conversationId ? "flex" : "hidden md:flex"}
+  `}
+>
 
         {activeConversation && (
           <div
