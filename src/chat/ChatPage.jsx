@@ -332,329 +332,68 @@ export default function ChatPage() {
 
 
   /* ================= UI ================= */
-  // return (
-  //   <>
-  //     {warning && (
-  //       <div className="bg-yellow-900 border border-yellow-500
-  //                 text-yellow-200 p-3 mb-2 rounded
-  //                 flex justify-between items-start gap-4">
-  //         <div>
-  //           ⚠️ <b>Warning from Admin:</b><br />
-  //           {warning.reason}
-  //         </div>
-
-  //         <button
-  //           className="text-yellow-300 hover:text-yellow-100 text-sm"
-  //           onClick={() => setWarning(null)}
-  //         >
-  //           ✕
-  //         </button>
-  //       </div>
-  //     )}
-
-
-  //     <div className="h-screen flex bg-black">
-
-  //       {/* ============ LEFT SIDEBAR ============ */}
-  //       <div className="w-1/4 bg-gray-900 border-r border-gray-800 flex flex-col">
-
-  //         <div className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
-  //           <span className="font-semibold text-gray-200">Chats</span>
-
-  //           <div className="flex items-center gap-2">
-  //             <button
-  //               onClick={() => setShowCreateGroup(true)}
-  //               className="text-blue-400 text-sm hover:text-blue-300"
-  //             >
-  //               + Group
-  //             </button>
-
-  //             <IconButton onClick={() => setShowProfile(true)}>
-  //               <Avatar
-  //                 src={myProfile?.profileImageUrl}
-  //                 sx={{ width: 32, height: 32 }}
-  //               />
-  //             </IconButton>
-  //           </div>
-  //         </div>
-
-  //         {showCreateGroup && (
-  //           <CreateGroup
-  //             onClose={() => setShowCreateGroup(false)}
-  //             onCreated={() => {
-  //               setShowCreateGroup(false);
-  //               loadConversations();
-  //             }}
-  //           />
-  //         )}
-
-  //         <div className="border-b border-gray-800">
-  //           <UserSearch onSelect={startChat} />
-  //         </div>
-
-  //         <div className="flex-1 overflow-y-auto">
-  //           {conversations.map(conv => {
-  //             const isGroup = conv.group === true;
-
-  //             let label = "Unknown conversation";
-
-  //             if (isGroup) {
-  //               label = conv.name || "Unnamed Group";
-  //             } else {
-  //               label =
-  //                 conv.participants
-  //                   ?.find(p => !p.deleted && p.user.email !== myEmail)
-  //                   ?.user.email || label;
-  //             }
-
-  //             return (
-  //               <div
-  //                 key={conv.id}
-  //                 onClick={() => openConversation(conv)}
-  //                 className={`px-4 py-3 cursor-pointer text-sm
-  //                   hover:bg-gray-800
-  //                   ${conv.id === conversationId
-  //                     ? "bg-gray-800 text-white"
-  //                     : "text-gray-300"}`}
-  //               >
-  //                 {isGroup && "👥 "}
-  //                 {label}
-  //               </div>
-  //             );
-  //           })}
-  //         </div>
-  //       </div>
-
-  //       {/* ============ RIGHT CHAT AREA ============ */}
-  //       <div className="flex-1 flex flex-col bg-black">
-
-  //         {activeConversation && (
-  //           <div className="h-14 px-4 flex items-center justify-between border-b border-gray-800">
-              
-  //             <div className="flex items-center gap-2 text-gray-300">
-  //               <div className="flex flex-col">
-  //                 <span className="text-sm font-medium">
-  //                   {isGroupConversation
-  //                     ? activeConversation.name
-  //                     : activeConversation.participants
-  //                       ?.find(p => !p.deleted && p.user.email !== myEmail)
-  //                       ?.user.email}
-  //                 </span>
-
-  //                 {/* ✅ ONLINE / LAST SEEN (1–1 only) */}
-  //                 {!isGroupConversation && (() => {
-  //                   const otherUser =
-  //                     activeConversation?.participants
-  //                       ?.find(p => !p.deleted && p.user.email !== myEmail)
-  //                       ?.user;
-
-  //                   const presence = otherUser
-  //                     ? presenceMap[otherUser.email] || {
-  //                       online: otherUser.online,
-  //                       lastSeen: otherUser.lastSeen
-  //                     }
-  //                     : null;
-
-
-  //                   if (!presence) return null;
-
-  //                   return (
-  //                     <span className="text-xs text-gray-400">
-  //                       {presence.online
-  //                         ? "Online"
-  //                         : formatLastSeen(presence.lastSeen)}
-  //                     </span>
-  //                   );
-  //                 })()}
-  //               </div>
-
-  //               {isGroupConversation && (
-  //                 <IconButton size="small" onClick={() => setShowGroupInfo(true)}>
-  //                   <InfoOutlinedIcon sx={{ color: "#9ca3af" }} />
-  //                 </IconButton>
-  //               )}
-  //             </div>
-
-
-  //             <div className="flex items-center gap-1">
-  //               {!isGroupConversation && activeConversation && (
-  //                 <IconButton
-  //                   size="small"
-  //                   onClick={async () => {
-  //                     const reason = prompt("Why are you reporting this user?");
-  //                     if (!reason) return;
-
-  //                     const target =
-  //                       activeConversation.participants
-  //                         ?.find(p => p.user.email !== myEmail)?.user;
-
-  //                     if (!target) return;
-
-  //                     try {
-  //                       await api.post(`/reports/user/${target.id}`, { reason });
-  //                       alert("Report submitted");
-  //                     } catch (e) {
-  //                       alert("Unable to submit report");
-  //                     }
-
-  //                   }}
-  //                 >
-  //                   <InfoOutlinedIcon sx={{ color: "red" }} />
-  //                 </IconButton>
-  //               )}
-
-  //               <IconButton onClick={deleteConversation}>
-  //                 <DeleteOutlineIcon sx={{ color: "red" }} />
-  //               </IconButton>
-  //             </div>
-  //           </div>
-  //         )}
-
-  //         {conversationId ? (
-  //           <>
-  //             <div className="flex-1 overflow-y-auto px-6 py-4">
-  //               <MessageList
-  //                 messages={messages}
-  //                 myEmail={myEmail}
-  //                 onDelete={deleteMessage}
-  //               />
-
-  //             </div>
-
-  //             <div className="border-t border-gray-800 bg-black">
-  //               <MessageInput
-  //                 stomp={stomp}
-  //                 conversationId={conversationId}
-  //                 disabled={myProfile?.enabled === false}
-  //               />
-  //             </div>
-  //           </>
-  //         ) : (
-  //           <div className="flex-1 flex items-center justify-center text-gray-500">
-  //             Select a chat
-  //           </div>
-  //         )}
-  //       </div>
-  //     </div>
-
-  //     {showProfile && (
-  //       <UpdateProfileDialog
-  //         open={showProfile}
-  //         onClose={(updated) => {
-  //           setShowProfile(false);
-  //           if (updated) {
-  //             api.get("/users/me").then(res => setMyProfile(res.data));
-  //           }
-  //         }}
-  //       />
-  //     )}
-
-  //     {showGroupInfo && activeConversation && (
-  //       <GroupInfoDialog
-  //         open={showGroupInfo}
-  //         onClose={() => setShowGroupInfo(false)}
-  //         group={activeConversation}
-  //         currentUserId={myProfile?.id}
-  //         isAdmin={isAdmin}
-  //         refresh={loadConversations}
-  //       />
-  //     )}
-  //   </>
-  // );
-
-  /* ================= UI ================= */
-return (
-  <>
-    {warning && (
-      <div className="fixed top-0 left-0 right-0 z-50 bg-yellow-900 border-b border-yellow-500
-                      text-yellow-200 p-3 flex justify-between items-start gap-4">
-        <div className="text-sm">
-          ⚠️ <b>Warning from Admin:</b><br />
-          {warning.reason}
-        </div>
-
-        <button
-          className="text-yellow-300 hover:text-yellow-100 text-sm"
-          onClick={() => setWarning(null)}
-        >
-          ✕
-        </button>
-      </div>
-    )}
-
-    <div className="h-screen w-full flex bg-black overflow-hidden">
-
-      {/* ================= LEFT SIDEBAR ================= */}
-<div
-  className={`
-    w-full md:w-1/3 lg:w-1/4
-    bg-gray-900 border-r border-gray-800
-    flex flex-col
-    ${conversationId ? "hidden md:flex" : "flex"}
-  `}
->
-
-        {/* Sidebar Header */}
-        <div className="px-3 sm:px-4 py-3 border-b border-gray-800
-                        flex justify-between items-center shrink-0">
-
-          <span className="font-semibold text-gray-200 text-base sm:text-lg">
-            Chats
-          </span>
-
-          <div className="flex items-center gap-1 sm:gap-2">
-
-            <button
-              onClick={() => setShowCreateGroup(true)}
-              className="text-blue-400 text-xs sm:text-sm
-                         hover:text-blue-300 whitespace-nowrap"
-            >
-              + Group
-            </button>
-
-            <IconButton
-              size="small"
-              onClick={() => setShowProfile(true)}
-            >
-              <Avatar
-                src={myProfile?.profileImageUrl}
-                sx={{
-                  width: { xs: 30, sm: 34 },
-                  height: { xs: 30, sm: 34 }
-                }}
-              />
-            </IconButton>
-
+  return (
+    <>
+      {warning && (
+        <div className="bg-yellow-900 border border-yellow-500
+                  text-yellow-200 p-3 mb-2 rounded
+                  flex justify-between items-start gap-4">
+          <div>
+            ⚠️ <b>Warning from Admin:</b><br />
+            {warning.reason}
           </div>
+
+          <button
+            className="text-yellow-300 hover:text-yellow-100 text-sm"
+            onClick={() => setWarning(null)}
+          >
+            ✕
+          </button>
         </div>
+      )}
 
-        {/* Create Group */}
-        {showCreateGroup && (
-          <CreateGroup
-            onClose={() => setShowCreateGroup(false)}
-            onCreated={() => {
-              setShowCreateGroup(false);
-              loadConversations();
-            }}
-          />
-        )}
 
-        {/* Search */}
-        <div className="border-b border-gray-800 shrink-0">
-          <UserSearch onSelect={startChat} />
-        </div>
+      <div className="h-screen flex bg-black">
 
-        {/* Conversation List */}
-        <div className="flex-1 overflow-y-auto min-h-0">
+        {/* ============ LEFT SIDEBAR ============ */}
+        <div className="w-1/4 bg-gray-900 border-r border-gray-800 flex flex-col">
 
-          {conversations.length === 0 ? (
-            <div className="h-full flex items-center justify-center
-                            text-gray-500 text-sm px-4 text-center">
-              No conversations yet
+          <div className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
+            <span className="font-semibold text-gray-200">Chats</span>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShowCreateGroup(true)}
+                className="text-blue-400 text-sm hover:text-blue-300"
+              >
+                + Group
+              </button>
+
+              <IconButton onClick={() => setShowProfile(true)}>
+                <Avatar
+                  src={myProfile?.profileImageUrl}
+                  sx={{ width: 32, height: 32 }}
+                />
+              </IconButton>
             </div>
-          ) : (
-            conversations.map(conv => {
+          </div>
 
+          {showCreateGroup && (
+            <CreateGroup
+              onClose={() => setShowCreateGroup(false)}
+              onCreated={() => {
+                setShowCreateGroup(false);
+                loadConversations();
+              }}
+            />
+          )}
+
+          <div className="border-b border-gray-800">
+            <UserSearch onSelect={startChat} />
+          </div>
+
+          <div className="flex-1 overflow-y-auto">
+            {conversations.map(conv => {
               const isGroup = conv.group === true;
 
               let label = "Unknown conversation";
@@ -664,11 +403,7 @@ return (
               } else {
                 label =
                   conv.participants
-                    ?.find(
-                      p =>
-                        !p.deleted &&
-                        p.user.email !== myEmail
-                    )
+                    ?.find(p => !p.deleted && p.user.email !== myEmail)
                     ?.user.email || label;
               }
 
@@ -676,376 +411,144 @@ return (
                 <div
                   key={conv.id}
                   onClick={() => openConversation(conv)}
-                  className={`
-                    px-3 sm:px-4 py-3
-                    cursor-pointer
-                    text-sm
-                    border-b border-gray-800/50
+                  className={`px-4 py-3 cursor-pointer text-sm
                     hover:bg-gray-800
-                    transition-colors
                     ${conv.id === conversationId
                       ? "bg-gray-800 text-white"
-                      : "text-gray-300"}
-                  `}
+                      : "text-gray-300"}`}
                 >
-
-                  <div className="flex items-center gap-3 min-w-0">
-
-                    {/* Avatar */}
-                    {isGroup ? (
-                      <div
-                        className="w-9 h-9 sm:w-10 sm:h-10
-                                   rounded-full bg-gray-700
-                                   flex items-center justify-center
-                                   shrink-0"
-                      >
-                        👥
-                      </div>
-                    ) : (
-                      <Avatar
-                        src={
-                          conv.participants
-                            ?.find(
-                              p =>
-                                !p.deleted &&
-                                p.user.email !== myEmail
-                            )
-                            ?.user.profileImageUrl
-                        }
-                        sx={{
-                          width: 40,
-                          height: 40
-                        }}
-                      />
-                    )}
-
-                    {/* Conversation name */}
-                    <div className="min-w-0 flex-1">
-
-                      <div className="truncate font-medium">
-                        {label}
-                      </div>
-
-                      {!isGroup && (
-                        <div className="text-xs text-gray-500 truncate mt-0.5">
-                          {conv.participants
-                            ?.find(
-                              p =>
-                                !p.deleted &&
-                                p.user.email !== myEmail
-                            )
-                            ?.user.email}
-                        </div>
-                      )}
-
-                    </div>
-
-                  </div>
-
+                  {isGroup && "👥 "}
+                  {label}
                 </div>
               );
-            })
-          )}
-
+            })}
+          </div>
         </div>
-      </div>
 
+        {/* ============ RIGHT CHAT AREA ============ */}
+        <div className="flex-1 flex flex-col bg-black">
 
-      {/* ================= RIGHT CHAT AREA ================= */}
-<div
-  className={`
-    flex-1 min-w-0
-    flex flex-col
-    bg-black
-    ${conversationId ? "flex" : "hidden md:flex"}
-  `}
->
-
-        {activeConversation && (
-          <div
-            className="
-              min-h-14
-              px-2 sm:px-4
-              py-2
-              flex items-center justify-between
-              border-b border-gray-800
-              shrink-0
-            "
-          >
-
-            {/* Left side: Back + User */}
-            <div className="flex items-center gap-1 sm:gap-2 min-w-0">
-
-              {/* Mobile Back Button */}
-              <IconButton
-                size="small"
-                className="md:hidden"
-                onClick={() => {
-                  setConversationId(null);
-                  setMessages([]);
-                }}
-              >
-                <span className="text-gray-300 text-xl">
-                  ←
-                </span>
-              </IconButton>
-
-              {/* User / Group Avatar */}
-              {!isGroupConversation ? (
-                <Avatar
-                  src={
-                    activeConversation.participants
-                      ?.find(
-                        p =>
-                          !p.deleted &&
-                          p.user.email !== myEmail
-                      )
-                      ?.user.profileImageUrl
-                  }
-                  sx={{
-                    width: 36,
-                    height: 36
-                  }}
-                />
-              ) : (
-                <div
-                  className="
-                    w-9 h-9
-                    rounded-full
-                    bg-gray-700
-                    flex items-center justify-center
-                    shrink-0
-                  "
-                >
-                  👥
-                </div>
-              )}
-
-              {/* Name + Presence */}
-              <div className="flex flex-col min-w-0">
-
-                <span
-                  className="
-                    text-sm font-medium text-gray-300
-                    truncate max-w-[180px]
-                    sm:max-w-[300px]
-                    md:max-w-[400px]
-                  "
-                >
-                  {isGroupConversation
-                    ? activeConversation.name
-                    : activeConversation.participants
-                        ?.find(
-                          p =>
-                            !p.deleted &&
-                            p.user.email !== myEmail
-                        )
+          {activeConversation && (
+            <div className="h-14 px-4 flex items-center justify-between border-b border-gray-800">
+              
+              <div className="flex items-center gap-2 text-gray-300">
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium">
+                    {isGroupConversation
+                      ? activeConversation.name
+                      : activeConversation.participants
+                        ?.find(p => !p.deleted && p.user.email !== myEmail)
                         ?.user.email}
-                </span>
+                  </span>
 
-                {/* Online / Last Seen */}
-                {!isGroupConversation &&
-                  (() => {
-
+                  {/* ✅ ONLINE / LAST SEEN (1–1 only) */}
+                  {!isGroupConversation && (() => {
                     const otherUser =
                       activeConversation?.participants
-                        ?.find(
-                          p =>
-                            !p.deleted &&
-                            p.user.email !== myEmail
-                        )
+                        ?.find(p => !p.deleted && p.user.email !== myEmail)
                         ?.user;
 
                     const presence = otherUser
                       ? presenceMap[otherUser.email] || {
-                          online: otherUser.online,
-                          lastSeen: otherUser.lastSeen
-                        }
+                        online: otherUser.online,
+                        lastSeen: otherUser.lastSeen
+                      }
                       : null;
+
 
                     if (!presence) return null;
 
                     return (
-                      <span className="text-xs text-gray-500 truncate">
+                      <span className="text-xs text-gray-400">
                         {presence.online
                           ? "Online"
                           : formatLastSeen(presence.lastSeen)}
                       </span>
                     );
-
                   })()}
+                </div>
+
+                {isGroupConversation && (
+                  <IconButton size="small" onClick={() => setShowGroupInfo(true)}>
+                    <InfoOutlinedIcon sx={{ color: "#9ca3af" }} />
+                  </IconButton>
+                )}
+              </div>
+
+
+              <div className="flex items-center gap-1">
+                {!isGroupConversation && activeConversation && (
+                  <IconButton
+                    size="small"
+                    onClick={async () => {
+                      const reason = prompt("Why are you reporting this user?");
+                      if (!reason) return;
+
+                      const target =
+                        activeConversation.participants
+                          ?.find(p => p.user.email !== myEmail)?.user;
+
+                      if (!target) return;
+
+                      try {
+                        await api.post(`/reports/user/${target.id}`, { reason });
+                        alert("Report submitted");
+                      } catch (e) {
+                        alert("Unable to submit report");
+                      }
+
+                    }}
+                  >
+                    <InfoOutlinedIcon sx={{ color: "red" }} />
+                  </IconButton>
+                )}
+
+                <IconButton onClick={deleteConversation}>
+                  <DeleteOutlineIcon sx={{ color: "red" }} />
+                </IconButton>
+              </div>
+            </div>
+          )}
+
+          {conversationId ? (
+            <>
+              <div className="flex-1 overflow-y-auto px-6 py-4">
+                <MessageList
+                  messages={messages}
+                  myEmail={myEmail}
+                  onDelete={deleteMessage}
+                />
 
               </div>
 
-              {/* Group Info */}
-              {isGroupConversation && (
-                <IconButton
-                  size="small"
-                  onClick={() => setShowGroupInfo(true)}
-                >
-                  <InfoOutlinedIcon
-                    sx={{
-                      color: "#9ca3af",
-                      fontSize: 20
-                    }}
-                  />
-                </IconButton>
-              )}
-
-            </div>
-
-
-            {/* Right side actions */}
-            <div className="flex items-center gap-0 shrink-0">
-
-              {/* Report */}
-              {!isGroupConversation && activeConversation && (
-                <IconButton
-                  size="small"
-                  onClick={async () => {
-
-                    const reason = prompt(
-                      "Why are you reporting this user?"
-                    );
-
-                    if (!reason) return;
-
-                    const target =
-                      activeConversation.participants
-                        ?.find(
-                          p =>
-                            p.user.email !== myEmail
-                        )?.user;
-
-                    if (!target) return;
-
-                    try {
-
-                      await api.post(
-                        `/reports/user/${target.id}`,
-                        { reason }
-                      );
-
-                      alert("Report submitted");
-
-                    } catch (e) {
-                      alert("Unable to submit report");
-                    }
-
-                  }}
-                >
-                  <InfoOutlinedIcon
-                    sx={{
-                      color: "red",
-                      fontSize: 21
-                    }}
-                  />
-                </IconButton>
-              )}
-
-              {/* Delete / Leave */}
-              <IconButton
-                size="small"
-                onClick={deleteConversation}
-              >
-                <DeleteOutlineIcon
-                  sx={{
-                    color: "red",
-                    fontSize: 22
-                  }}
+              <div className="border-t border-gray-800 bg-black">
+                <MessageInput
+                  stomp={stomp}
+                  conversationId={conversationId}
+                  disabled={myProfile?.enabled === false}
                 />
-              </IconButton>
-
-            </div>
-
-          </div>
-        )}
-
-
-        {/* ================= MESSAGES ================= */}
-        {conversationId ? (
-          <>
-            <div
-              className="
-                flex-1
-                min-h-0
-                overflow-y-auto
-                px-2 sm:px-4 md:px-6
-                py-3 sm:py-4
-              "
-            >
-              <MessageList
-                messages={messages}
-                myEmail={myEmail}
-                onDelete={deleteMessage}
-              />
-            </div>
-
-            {/* ================= MESSAGE INPUT ================= */}
-            <div
-              className="
-                border-t border-gray-800
-                bg-black
-                shrink-0
-                px-1 sm:px-0
-              "
-            >
-              <MessageInput
-                stomp={stomp}
-                conversationId={conversationId}
-                disabled={myProfile?.enabled === false}
-              />
-            </div>
-          </>
-        ) : (
-          /* ================= EMPTY STATE ================= */
-          <div
-            className="
-              flex-1
-              flex flex-col
-              items-center justify-center
-              text-gray-500
-              px-6
-              text-center
-            "
-          >
-            <div className="text-5xl mb-4 opacity-40">
-              💬
-            </div>
-
-            <h2 className="text-lg sm:text-xl font-medium text-gray-400">
+              </div>
+            </>
+          ) : (
+            <div className="flex-1 flex items-center justify-center text-gray-500">
               Select a chat
-            </h2>
-
-            <p className="text-sm text-gray-600 mt-1">
-              Choose a conversation to start messaging
-            </p>
-          </div>
-        )}
-
+            </div>
+          )}
+        </div>
       </div>
 
-
-      {/* ================= PROFILE DIALOG ================= */}
       {showProfile && (
         <UpdateProfileDialog
           open={showProfile}
           onClose={(updated) => {
-
             setShowProfile(false);
-
             if (updated) {
-              api
-                .get("/users/me")
-                .then(res => setMyProfile(res.data));
+              api.get("/users/me").then(res => setMyProfile(res.data));
             }
-
           }}
         />
       )}
 
-
-      {/* ================= GROUP INFO ================= */}
       {showGroupInfo && activeConversation && (
         <GroupInfoDialog
           open={showGroupInfo}
@@ -1056,9 +559,7 @@ return (
           refresh={loadConversations}
         />
       )}
-
-    </div>
-  </>
-);
+    </>
+  );
 }
 
